@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To-Do App</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>To-Do App</h1>
+   
+    <div class="container"> <input placeholder="add to-do" type="text" class="input-box">
+        <button class="addbtn">Add</button>
+      
+        </div>
+        <div class="todos"></div>
+    
+
+    <script>
+        const input = document.querySelector(".input-box");
+        const addbtn = document.querySelector(".addbtn");
+        const todos = document.querySelector(".todos");
+        let todo = [];
+
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadTodos();
+        });
+
+        addbtn.addEventListener('click', () => {
+            let value = input.value;
+            todo.push(value);
+            showTodos();
+            saveTodos()
+        });
+
+        function showTodos() {
+            let html = '';
+            for (let i in todo) {
+                html += `<p>${todo[i]}  <button class="delbtn" onclick="deleteTodo(${i})">Delete</button></p>`;
+            }
+            todos.innerHTML = html;
+            input.value = '';
+            
+        }
+
+        function deleteTodo(index) {
+            todo.splice(index, 1);
+            showTodos();
+            saveTodos()
+        }
+
+        function saveTodos() {
+            localStorage.setItem('todos', JSON.stringify(todo));
+        }
+
+        function loadTodos() {
+            let storedTodos = localStorage.getItem('todos');
+            todo = storedTodos ? JSON.parse(storedTodos) : [];
+            showTodos();
+        }
+
+    </script>
+</body>
+</html>
