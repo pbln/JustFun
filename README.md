@@ -1,0 +1,2 @@
+# JustFun
+small practice projects
